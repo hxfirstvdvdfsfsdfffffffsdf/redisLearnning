@@ -111,5 +111,5 @@ Redis实现分布式锁用的是SETNX ———— Set if not exists，在指定
  }
  
   ```
-  Redis分布式锁还有一种简单的实现方法，并且这种方法是原子性的，绝对线程安全可靠————Lua脚本，通过redisTemplate的execute()方法来调用Lua脚本；
+  Redis分布式锁还有一种简单的实现方法，并且这种方法是原子性的，绝对线程安全可靠————Lua脚本，Lua脚本一般是用c编写，具有轻量快捷的特点，通过redisTemplate的execute()方法来调用Lua脚本；
   Redission是一个redis官方推荐的分布式解决方案，更加推荐使用Redission来作为分布式锁的解决方案。
