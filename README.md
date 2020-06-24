@@ -1,13 +1,13 @@
 # redisLearnning
-### Redis学习
+## Redis学习
 
-
+### 1.Template
 在sping boot添加redis依赖以后，可以使用redis的template进行各种内存操作，包括缓存、热值、排序和列表等，很有名的处理方法有缓存穿透、缓存击穿和缓存雪崩等；
 redis下有两个Template,分别是：
 * RedisTemplate
 * StringRedisTemplate
 
-StringRedisTemplate是RedisTemplate的进一步改装，看源码：
+StringRedisTemplate是RedisTemplate的进一步改装，RedisTemplate使用JDK序列化方式，但是StringRedisTemplate修改了序列化策略，看源码：
 ```
 public class StringRedisTemplate extends RedisTemplate<String, String> {
 
@@ -42,7 +42,7 @@ private RedisTemplate<String,String> redis;
 
 @Test
 	public void redisTest() {
-		redis.opsForValue().set("login","user1");;
+		redis.opsForValue().set("login","user1");
 		 System.out.println(redis.opsForValue().get("login"));
 		assertTrue("user1".equals(redis.opsForValue().get("login")));
 	}
@@ -54,7 +54,7 @@ private RedisTemplate redis;
 
 @Test
 	public void redisTest() {
-		redis.opsForValue().set("login","user1");;
+		redis.opsForValue().set("login","user1");
 		 System.out.println(redis.opsForValue().get("login"));
 		assertTrue("user1".equals(redis.opsForValue().get("login")));
 	}
@@ -64,5 +64,11 @@ private RedisTemplate redis;
   
   原因：使用Template的时候StringRedisTemplate的参数就是<String,String>,在底层实现中已经写死，在Autowaird时才不用声明，但是RedisTemplate的参数具有多种数据类型，所有Autowaird的时候要精确的声明，如果参数全是String则声明为<String,String>,如果有Integer则声明为<String,Integer>类型，切记！
 总体来说，StringRedisTemplate是实际使用中用的最多的Template,因为String类型对于编程更加友好，而RedisTemplate则属于更加通用，可以支持不同的数据类型，操作起来也更加麻烦和容易出bug;
-
+### 2.opsFor
+代码 redis.opsForValue().set("login","user1")中opsForValue返回的是一个ValueOperations对象，除了这个方法外，opsFor还包括：
+* opsForHash(),返回HaspOperations
+* opsForList(),返回ListOperations
+* opsForSet(),返回SetOperations
+* opsForZSet(),返回ZSetOperations
+* opsForGeo(),返回GeoOperations
 
