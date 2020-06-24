@@ -61,7 +61,8 @@ private RedisTemplate redis;
   ```
   最后console报错：
   >Caused by: org.springframework.beans.factory.NoUniqueBeanDefinitionException: No qualifying bean of type 'org.springframework.data.redis.core.RedisTemplate<?, ?>' available: expected single matching bean but found 2: redisTemplate,stringRedisTemplate
-  原因：使用Template的时候StringRedisTemplate的参数就是<String,String>,在Autowaird时不用声明，但是RedisTemplate的参数具有多种数据类型，所有Autowaird的时候要精确的声明，如果参数全是String则声明为<String,String>,如果有Integer则声明为<String,Integer>类型，切记！
+  
+  原因：使用Template的时候StringRedisTemplate的参数就是<String,String>,在底层实现中已经写死，在Autowaird时才不用声明，但是RedisTemplate的参数具有多种数据类型，所有Autowaird的时候要精确的声明，如果参数全是String则声明为<String,String>,如果有Integer则声明为<String,Integer>类型，切记！
 总体来说，StringRedisTemplate是实际使用中用的最多的Template,因为String类型对于编程更加友好，而RedisTemplate则属于更加通用，可以支持不同的数据类型，操作起来也更加麻烦和容易出bug;
 
 
