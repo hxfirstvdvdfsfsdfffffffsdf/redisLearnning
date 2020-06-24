@@ -77,3 +77,9 @@ stringRedisTemplate.opsForSet().add("set1","1");
 		stringRedisTemplate.opsForSet().add("set2", "2");
 	System.out.println(stringRedisTemplate.opsForSet().members("set2"));
  ```
+### 3.分布式锁
+目前分布式锁的主流方案包括一下4种：
+* 数据库(很少使用，性能是最大障碍)
+* Redis
+* Zookeeper
+* Chubby(妈妈是谷歌，国内用的比较少，和Zookeeper归为一类)
