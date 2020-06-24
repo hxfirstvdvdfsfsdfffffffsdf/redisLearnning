@@ -1,13 +1,14 @@
 # redisLearnning
-Redis学习
+### Redis学习
 
 
-在sping boot添加redis依赖以后，可以使用redis的template进行各种内存操作，包括缓存、热值、排序和列表等
+在sping boot添加redis依赖以后，可以使用redis的template进行各种内存操作，包括缓存、热值、排序和列表等，很有名的处理方法有缓存穿透、缓存击穿和缓存雪崩等；
 redis下有两个Template,分别是：
 * RedisTemplate
 * StringRedisTemplate
 
 StringRedisTemplate是RedisTemplate的进一步改装，看源码：
+```
 public class StringRedisTemplate extends RedisTemplate<String, String> {
 
 	public StringRedisTemplate() {
@@ -18,6 +19,8 @@ public class StringRedisTemplate extends RedisTemplate<String, String> {
 	}
 ....
 }
+```
+
 从源码可以看出StringRedis继承自Redis,并且参数都是String类型。
 例1：StringRedisTemplate的基本使用
 ```
