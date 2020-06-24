@@ -2,7 +2,7 @@
 ## Redis学习
 
 ### 1.Template
-在sping boot添加redis依赖以后，可以使用redis的template进行各种内存操作，包括缓存、热值、排序和列表等，很有名的处理方法有缓存穿透、缓存击穿和缓存雪崩等；
+在sping boot添加redis依赖以后，可以使用redis的template进行各种内存操作，包括缓存、热值、排序、列表和分布式锁等，很有名的焦点问题有缓存穿透、缓存击穿和缓存雪崩等；
 redis下有两个Template,分别是：
 * RedisTemplate
 * StringRedisTemplate
@@ -72,3 +72,8 @@ private RedisTemplate redis;
 * opsForZSet(),返回ZSetOperations
 * opsForGeo(),返回GeoOperations
 
+ ```
+stringRedisTemplate.opsForSet().add("set1","1");
+		stringRedisTemplate.opsForSet().add("set2", "2");
+	System.out.println(stringRedisTemplate.opsForSet().members("set2"));
+ ```
