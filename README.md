@@ -83,3 +83,33 @@ stringRedisTemplate.opsForSet().add("set1","1");
 * Redis
 * Zookeeper
 * Chubby(妈妈是谷歌，国内用的比较少，和Zookeeper归为一类)
+
+实现原理基本相同：
+* 操作的原子性
+* 资源的唯一性（边界资源）
+
+实现的3种方式
+1.数据库方式：乐/悲观锁+唯一约束
+2.Redis方式： setnx命令
+3.Zookeeper方式：临时顺序节点
+
+Redis实现分布式锁用的是SETNX ———— Set if not exists，在指定的key不存在时，为key设置指定的值。并且当设置成功时返回1，失败返回0，因此我们可以通过返回值来判断加锁是否成功。
+ ```
+ 一个Redis锁的一般实现，在多数情况下，这个锁是安全的，但是在超高并发量的情况下，还是可能出现问题
+ @Component
+ public class RedisLock{
+ @Autowaird
+ private StringRedisTemplate redis;
+ public boolean lock(String key,String value){
+ return redis.opsForValue().setIfAbsent(key,value);//setnx命令封装成了setIfAbsent()方法，返回值封装成了boolean
+ }
+ public void unlock(String key,String vlue){
+ String oldValue=redis.opsForValue().get(key);
+ if(object.nonNull(oldValue)&&oldValue.equals(value));
+ redis.delete(key);
+ }
+ }
+ 
+  ```
+  Redis分布式锁还有一种简单的实现方法，并且这种方法是原子性的，绝对线程安全可靠————Lua脚本，通过redisTemplate的execute()方法来调用Lua脚本；
+  Redission是一个redis官方推荐的分布式解决方案，更加推荐使用Redission来作为分布式锁的解决方案。
